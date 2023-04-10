@@ -11,7 +11,7 @@
   </div>
   <div>
     <%= form.label :email %> <br>
-    <%= form.text_field :email_field %> <br>
+    <%= form.email_field :email %> <br>
     <% @user.errors.full_messages_for(:email).each do |message| %>
       <div>
         <%= message %>
