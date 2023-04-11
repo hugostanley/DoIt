@@ -1,0 +1,22 @@
+<header class="w-full h-[4rem] border-b-[1px] border-b-gray-500">
+  <nav class="flex justify-between w-full p-4 ">
+    <h1 class="flex-none">helo</h1>
+    <div class="flex-grow"></div>
+    <ul class="flex flex-none justify-around w-1/3">
+
+      <li><%= link_to "Home", home_page_path %></li>
+      <% if session[:is_logged_in] %>
+
+      <li><%= link_to "All tasks", user_tasks_path(session[:user_id]) %></li>
+      <li><%= link_to "Profile", user_profile_path(session[:user_id]) %></li>
+      <li><%= link_to "Sign Out", user_signout_path , data: {"turbo-method": :delete} %></li>
+
+      <% else %>
+      <li><%= link_to "Sign in", user_login_path %></li>
+      <li><%= link_to "Sign up", new_user_path %></li>
+        
+      <% end %>
+    </ul>
+  </nav>
+</header>
+
