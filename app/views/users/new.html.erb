@@ -1,4 +1,5 @@
 <h1>Sign up</h1>
+<div class="text-black">
 <%= form_with model: @user, url: new_user_path do |form| %>
   <div>
     <%= form.label :username %> <br>
@@ -37,6 +38,7 @@
     <% end %>
   </div>
   <div>
-    <button><%= form.submit %></button>
+    <%= form.submit %>
   </div>
 <% end %>
+</div>

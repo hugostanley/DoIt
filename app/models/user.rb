@@ -2,6 +2,7 @@
 require 'bcrypt'
 class User < ApplicationRecord
   has_secure_password
+  has_many :tasks
   validates :username, presence: true, length: { in: 2..50 }, uniqueness: true
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
 
