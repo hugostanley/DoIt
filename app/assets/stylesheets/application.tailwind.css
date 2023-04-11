@@ -11,3 +11,10 @@
 }
 
 */
+
+input {
+  color: black;
+}
+ label, button input {
+  color: white;
+}
