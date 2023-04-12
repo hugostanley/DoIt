@@ -34,4 +34,10 @@ Rails.application.routes.draw do
   get 'users/:id/tasks/new', to: 'tasks#new', as: 'new_task'
   # show task
   get 'users/:id/tasks/:task_id', to: 'tasks#show', as: 'user_task'
+
+  # complete task
+  post 'users/:id/tasks/:task_id/complete', to: 'tasks#complete_task', as: 'complete_task'
+
+  # delete task
+  delete 'users/:id/tasks/:task_id/delete', to: 'tasks#destroy', as: 'delete_task'
 end
