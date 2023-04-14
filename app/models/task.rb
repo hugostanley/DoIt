@@ -7,6 +7,10 @@ class Task < ApplicationRecord
   validates :is_completed, inclusion: { in: [true, false] }, allow_blank: true
   validate :date_completed_cannot_be_future
 
+  def self.sort_tasks_by_latest_update(id)
+    Task.where(user_id: id).sort_by { |task| task.updated_at }.reverse
+  end
+
   private 
 
   def date_completed_cannot_be_future
@@ -14,4 +18,5 @@ class Task < ApplicationRecord
       errors.add(:date_completed, 'completion date cannot be in the future')
     end
   end
+
 end
