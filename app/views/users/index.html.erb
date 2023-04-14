@@ -1,9 +1,12 @@
 <h1 class="text-4xl mx-2">USERS</h1>
 <section>
-<% @users.each do |item| %>
-  <div class="flex flex-col w-full h-fit border border gray-400 shadow-sm rounded-md mx-2 p-2">
-    <span class="text-3xl"><%= item.username %></span>
-    <span class="text-3xl"><%= item.email %></span>
-  </div>
-<% end %>
+  <% @users.each do |item| %>
+    <%= form_with url: add_friend_path(user_id: session[:user_id], friend_id: item.id, status: "pending"), method: :post do |form| %>
+      <div class="flex flex-col w-full h-fit border border gray-400 shadow-sm rounded-md mx-2 p-2">
+        <span class="text-3xl"><%= item.username %></span>
+        <span class="text-3xl"><%= item.email %></span>
+        <%= form.submit "Add friend", class: "text-white text-3xl cursor-pointer" %>
+      </div>
+    <% end %>
+  <% end %>
 </section>
