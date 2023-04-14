@@ -17,4 +17,14 @@ class User < ApplicationRecord
   def all_friends
     self.friends 
   end
+
+  def self.all_pending_friends(id)
+    pending_friendships = Friendship.where(user_id: id, status: 'pending')
+    pending_friends = pending_friendships.map {|f| User.find(f.friend_id)}
+  end
+
+  def self.all_accepted_friends(id)
+    accepted_friendships = Friendship.where(user_id: id, status: 'accepted')
+    accepted_friends = accepted_friendships.map {|f| User.find(f.friend_id)}
+  end
 end
