@@ -16,7 +16,8 @@ class UsersController < ApplicationController
   # Display all users
   # TODO: Admin authorization only
   def index
-    @users = User.all
+    current_user = User.find(session[:user_id])
+    @users = User.where.not(id: session[:user_id]).reject {|user| current_user.friends.include?(user)}
   end
 
   # User profile
