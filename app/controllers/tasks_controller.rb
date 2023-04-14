@@ -2,8 +2,7 @@ class TasksController < ApplicationController
   before_action :require_login
   def index
     @user = User.find(session[:user_id])
-    unsorted_tasks = Task.where(user_id: @user[:id])
-    @tasks = unsorted_tasks.sort_by {|task| task.updated_at}.reverse
+    @tasks = Task.sort_tasks_by_latest_update(@user.id)
   end
 
   def new
@@ -32,9 +31,9 @@ class TasksController < ApplicationController
     task = Task.find(params[:task_id])
 
     if task.present?
-      task.update!(:date_completed => Time.now, :is_completed => true)
+      task.update!(date_completed: Time.now, is_completed: true)
       if request.referrer == user_tasks_url
-        redirect_to  user_tasks_path @user
+        redirect_to user_tasks_path @user
       else
         redirect_to user_task id: session[:user_id], task_id: task.id
       end
