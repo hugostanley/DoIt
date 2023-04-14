@@ -1,5 +1,5 @@
 <div class="flex justify-between">
-<h1 class="text-4xl mx-2">Tasks</h1>
+<h1 class="text-4xl mx-2">All Tasks</h1>
 <%= link_to "Create New Task", new_task_path(@user) %>
 </div>
 
@@ -27,7 +27,7 @@
     </div>
   <% end %>
         <%= form_with url: complete_task_path(:id => task.user_id, :task_id => task.id), method: "post" do |form| %>
-          <%= form.submit "complete" %>
+          <button class="bg-yellow"><%= form.submit "complete" %></button>
           <% end %>
         <%= form_with url: delete_task_path(:id => task.user_id, :task_id => task.id), method: "delete" do |form| %>
           <%= form.submit "delete"%>
