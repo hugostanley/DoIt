@@ -22,29 +22,31 @@ Rails.application.routes.draw do
   ## user submit signup form
   post '/user/signup', to: 'users#create'
   ## user profile
-  get 'users/:id/profile', to: 'users#show', as: 'user_profile'
+  get 'user/:id/profile', to: 'users#show', as: 'user_profile'
 
   # TASKS CONTROLLER ROUTES
   ## all tasks
-  get 'users/:id/tasks', to: 'tasks#index', as: 'user_tasks'
+  get 'user/tasks', to: 'tasks#index', as: 'user_tasks'
+
+  get 'user/tasks/feed', to: 'tasks#feed', as: 'user_tasks_feed'
   # task signup form
-  get 'users/:id/tasks/new', to: 'tasks#new', as: 'new_task'
+  get 'user/tasks/new', to: 'tasks#new', as: 'new_task'
   ## task submit signup form
-  post 'users/tasks/new', to: 'tasks#create', as: 'create_task'
+  post 'user/tasks/new', to: 'tasks#create', as: 'create_task'
   # task profile
-  get 'users/:id/tasks/:task_id', to: 'tasks#show', as: 'user_task'
+  get 'users/tasks/:task_id', to: 'tasks#show', as: 'user_task'
   # complete task
-  post 'users/tasks/complete', to: 'tasks#complete_task', as: 'complete_task'
+  post 'user/tasks/complete', to: 'tasks#complete_task', as: 'complete_task'
   # delete task
-  delete 'users/:id/tasks/:task_id/delete', to: 'tasks#destroy', as: 'delete_task'
+  delete 'user/:id/tasks/:task_id/delete', to: 'tasks#destroy', as: 'delete_task'
 
   # FRIENDS CONTROLLER ROUTES
   ## all friends
-  get 'users/:id/friends', to: 'friends#index', as: 'all_friends'
+  get 'user/friends', to: 'friends#index', as: 'all_friends'
   ## send friend request
-  post 'users/friends/add', to: 'friends#create', as: 'add_friend'
+  post 'user/friends/add', to: 'friends#create', as: 'add_friend'
   ## accept friend request
-  put 'users/:id/friends', to: 'friends#accept_friend_request', as: 'accept_friend_request'
+  patch 'user/friends/accept', to: 'friends#accept_friend_request', as: 'accept_friend_request'
   ## reject friend request
-  put 'users/:id/friends', to: 'friends#reject_friend_request', as: 'reject_friend_request'
+  patch 'user/friends/reject', to: 'friends#reject_friend_request', as: 'reject_friend_request'
 end
