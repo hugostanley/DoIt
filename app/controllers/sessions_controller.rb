@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+
+# SessionsController
+# Mainly for login
 class SessionsController < ApplicationController
-  before_action :check_if_logged_in, only: [:create, :new]
+  before_action :check_if_logged_in, only: %i[create new]
   def new; end
 
   def create
@@ -7,8 +11,7 @@ class SessionsController < ApplicationController
     if @user
       session[:is_logged_in] = true
       session[:user_id] = @user.id
-      p session
-      redirect_to user_tasks_path @user
+      redirect_to user_tasks_feed_path
     else
       flash[:error] = 'Invalid email/password combination'
       redirect_to user_login_path
@@ -16,7 +19,6 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    p "this is running"
     session[:user_id] = nil
     session[:is_logged_in] = nil
     redirect_to home_page_path
@@ -31,6 +33,6 @@ class SessionsController < ApplicationController
 
   def check_if_logged_in
     is_logged_in = session[:user_id].present?
-    redirect_to user_tasks_path session[:user_id] if is_logged_in && User.find(session[:user_id])
+    redirect_to user_tasks_feed_path if is_logged_in && User.find(session[:user_id])
   end
 end

@@ -8,7 +8,7 @@
 # 4. handling authentication with sessions
 class UsersController < ApplicationController
   # when users controller is ran, run the require_login method
-  before_action :require_login, only: [:show, :index]
+  before_action :require_login, only: %i[show index]
 
   # if a user is accessing someone elses account profile page '/users/profile/:id', run this private method
   before_action :private_profile, only: [:show]
@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   # Display all users
   # TODO: Admin authorization only
   def index
-    @users = User.all
+    @users = User.get_all_users_non_friend_and_rejected_friendship_users session[:user_id]
   end
 
   # User profile
@@ -34,9 +34,9 @@ class UsersController < ApplicationController
     @user = User.new(secure_params)
 
     if @user.save
-      session[:user_id]= @user.id
+      session[:user_id] = @user.id
       session[:is_logged_in] = true
-      redirect_to user_tasks_path(@user)
+      redirect_to user_tasks_path
     else
       render :new, status: :unprocessable_entity
     end
