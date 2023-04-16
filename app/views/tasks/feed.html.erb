@@ -1,0 +1,24 @@
+<h1>Tasks feed</h1>
+
+<% @tasks.each do  |task| %>
+    <div class="flex w-full h-fit justify-between hover:shadow-lg transform hover:-translate-y-1 hover:bg-primaryGray transition-all duration-200 border border gray-400 shadow-sm rounded-md mx-2 p-2">
+      <div class="flex flex-col">
+    <h1><%= task[:username] %></h1>
+        <span class="text-3xl"><%= task[:task].title %></span>
+        <span class="text-lg"><%= task[:task].description %></span>
+        <span class="text-md">deadline: <% if task[:task].deadline.present? %>
+          <%= task[:task].deadline.strftime("%B, %A %d") %>
+        <% else %>
+          no due date
+        <% end %></span>
+        <span class="text-md">completed: <% if task[:task].is_completed? %>
+          <%= task[:task].date_completed.strftime("%B, %A %d") %>
+          <% else %>
+            not yet completed
+          <% end %>
+        </span>
+      </div>
+      <div>
+      </div>
+    </div>
+<% end %>
