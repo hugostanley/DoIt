@@ -5,7 +5,7 @@
 
 <section class="flex flex-col mt-5">
 <% @tasks.each do |task| %>
-  <%= link_to  user_task_path(id: task.user_id, task_id: task[:id]) do %>
+  <%= link_to  user_task_path(task_id: task[:id]) do %>
     <div class="flex w-full h-fit justify-between hover:shadow-lg transform hover:-translate-y-1 hover:bg-primaryGray transition-all duration-200 border border gray-400 shadow-sm rounded-md mx-2 p-2">
       <div class="flex flex-col">
         <span class="text-3xl"><%= task.title %></span>
