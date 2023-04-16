@@ -1,0 +1,54 @@
+<h1 class="text-4xl mx-2">Friends</h1>
+<section>
+  <div>
+    <h1>Accepted Friends</h1>
+    <% if @accepted_friends.any? %>
+      <% @accepted_friends.each do |item| %>
+        <div class="flex flex-col w-full h-fit border border gray-400 shadow-sm rounded-md mx-2 p-2">
+          <span class="text-3xl"><%= item.username %></span>
+          <span class="text-3xl"><%= item.email %></span>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div>
+    <h1>Friend Requests</h1>
+    <% if @pending_friends.any? %>
+      <% @pending_friends.each do |item| %>
+        <div class="flex flex-col w-full h-fit border border gray-400 shadow-sm rounded-md mx-2 p-2">
+          <span class="text-3xl"><%= item.username %></span>
+          <span class="text-3xl"><%= item.email %></span>
+          <%= form_with url: accept_friend_request_path(friendship: {:user_id => session[:user_id], :friend_id => item.id}), method: "patch" do |form| %>
+            <%= form.submit "Add", class: 'text-white cursor-pointer' %>
+          <% end %>
+          <%= form_with url: reject_friend_request_path(friendship: {:user_id => session[:user_id], :friend_id => item.id}), method: "patch" do |form| %>
+            <%= form.submit "Reject"%>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div>
+    <h1>Pending Requests</h1>
+    <% if @requested_friends.any? %>
+      <% @requested_friends.each do |item| %>
+        <div class="flex flex-col w-full h-fit border border gray-400 shadow-sm rounded-md mx-2 p-2">
+          <span class="text-3xl"><%= item.username %></span>
+          <span class="text-3xl"><%= item.email %></span>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div>
+    <h1>Rejected Friends</h1>
+    <% if @rejected_friends.any? %>
+      <% @rejected_friends.each do |item| %>
+        <div class="flex flex-col w-full h-fit border border gray-400 shadow-sm rounded-md mx-2 p-2">
+          <span class="text-3xl"><%= item.username %></span>
+          <span class="text-3xl"><%= item.email %></span>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</section>
+

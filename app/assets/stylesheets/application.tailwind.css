@@ -12,7 +12,7 @@
 
 */
 
-input {
+input, textarea {
   color: black;
 }
  label, button input {

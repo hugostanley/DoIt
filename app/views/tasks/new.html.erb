@@ -1,5 +1,5 @@
 <h1>Create new Todo</h1>
-<%= form_with model: @task, url: user_tasks_path do |form| %>
+<%= form_with model: @task, url: create_task_path do |form| %>
   <div>
     <%= form.label :title %> <br>
     <%= form.text_field :title %> <br>
@@ -11,7 +11,7 @@
   </div>
   <div>
     <%= form.label :description %> <br>
-    <%= form.text_field :description %> <br>
+    <%= form.text_area :description %> <br>
     <% @task.errors.full_messages_for(:description).each do |message| %>
       <div>
         <%= message %>

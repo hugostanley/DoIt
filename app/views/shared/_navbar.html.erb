@@ -7,8 +7,9 @@
       <li><%= link_to "Home", home_page_path %></li>
       <% if session[:is_logged_in] %>
 
-      <li><%= link_to "All tasks", user_tasks_path(session[:user_id]) %></li>
+      <li><%= link_to "My Tasks", user_tasks_path %></li>
       <li><%= link_to "Profile", user_profile_path(session[:user_id]) %></li>
+      <li><%= link_to "Friends", all_friends_path%></li>
       <li><%= link_to "Sign Out", user_signout_path , data: {"turbo-method": :delete} %></li>
 
       <% else %>
