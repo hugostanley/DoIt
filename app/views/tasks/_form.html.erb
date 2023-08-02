@@ -1,0 +1,46 @@
+<div class='h-screen w-screen fixed flex justify-center items-center modal z-50'>
+  <div class='h-fit w-[80vw] rounded-lg shadow-lg drop-shadow-lg fixed bg-white z-50 py-10 px-7'>
+    <%= form_with model: task, url: create_task_path, class: "flex flex-col gap-2" do |form| %>
+
+      <div>
+        <%= form.text_field :title, placeholder: "Title" %>
+
+        <% task.errors.full_messages_for(:title).each do |message| %>
+          <div>
+            <%= message %>
+          </div>
+        <% end %>
+      </div>
+
+      <div>
+        <%= form.text_area :description, placeholder: 'Description' %>
+        <% task.errors.full_messages_for(:description).each do |message| %>
+          <div>
+            <%= message %>
+          </div>
+        <% end %>
+      </div>
+
+      <div>
+        <%= form.label :deadline %>
+        <%= form.date_field :deadlne %>
+        <% task.errors.full_messages_for(:deadline).each do |message| %>
+          <div>
+            <%= message %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="self-end mt-2">
+        <button class="text-white px-4 bg-accent-orange rounded-full shadow-lg h-8">
+          <%= form.submit %>
+        </button>
+      </div>
+
+      <div class="self-end mt-2">
+        <%= link_to "Cancel" , "#", data: {controller: "modals", action: "modals#close" } %>
+      </div>
+    <% end %>
+  </div>
+</div>
+

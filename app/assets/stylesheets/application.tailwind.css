@@ -18,3 +18,52 @@ input, textarea {
  label, button input {
   color: white;
 }
+
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+span.material-icons {
+  font-size: 1rem;
+}
+
+@keyframes hab {
+  0% {
+  max-width: 2rem;
+  }
+  100% {
+  max-width: 11rem;
+  }
+}
+
+@keyframes dont {
+  0% {
+  max-width: 11rem;
+  }
+  100% {
+  max-width: 2rem;
+  }
+}
+
+.removeanimate {
+  animation-name: dont;
+  animation-duration: 100ms;
+  animation-timing-function: ease;
+  animation-fill-mode: forwards;
+  width: 8rem;
+}
+
+.habanimate {
+  animation-name: hab;
+  animation-duration: 200ms;
+  animation-timing-function: ease;
+  animation-fill-mode: forwards;
+  width: auto;
+  padding-right: 1rem;
+}
+
+.modal {
+  background-color: rgba(255,255,255,0.5);
+}
+
+

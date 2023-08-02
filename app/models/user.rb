@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-require 'bcrypt'
+
+require "bcrypt"
 # user class
 class User < ApplicationRecord
   has_secure_password
@@ -7,8 +8,8 @@ class User < ApplicationRecord
   has_many :friendships, dependent: :destroy
   has_many :friends, through: :friendships
 
-  validates :username, presence: true, length: { in: 2..50 }, uniqueness: true
-  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
+  validates :username, presence: true, length: {in: 2..50}, uniqueness: true
+  validates :email, presence: true, format: {with: URI::MailTo::EMAIL_REGEXP}, uniqueness: true
 
   def auth_with_password_digest(password)
     BCrypt::Password.new(password_digest).is_password?(password)
@@ -26,8 +27,15 @@ class User < ApplicationRecord
   def self.get_all_users_non_friend_and_rejected_friendship_users(id)
     current_user = User.find(id)
     non_friend_users = User.get_non_friend_users current_user
-    rejected_friends = User.get_friends_by_status(id, 'rejected')
+    rejected_friends = User.get_friends_by_status(id, "rejected")
     non_friend_users + rejected_friends
   end
 
+  def self.get_completed_tasks_count(id)
+    User.find(id).tasks.where(is_completed: true).length
+  end
+
+  def self.get_created_tasks(id)
+    User.find(id).tasks.length
+  end
 end

@@ -22,6 +22,8 @@ class UsersController < ApplicationController
   # User profile
   def show
     @user = User.find(params[:id])
+    @completed_tasks = User.get_completed_tasks_count(params[:id])
+    @all_tasks_count = User.get_created_tasks(params[:id])
   end
 
   # Signup method, instantiates an empty user hash
@@ -42,6 +44,13 @@ class UsersController < ApplicationController
     end
   end
 
+  # search
+  def search
+  end
+
+  def search_submit
+  end
+
   private
 
   # Params validations
@@ -51,13 +60,13 @@ class UsersController < ApplicationController
 
   # First to run in this controller
   def require_login
-    is_logged_in = session[:is_logged_in]
+    is_logged_in = session[:is_logged_in] && session[:user_id]
 
     # Guard clause to return early if user is logged in
     return if is_logged_in && User.find(session[:user_id])
 
     # else go to login page
-    flash[:error] = 'Please Log in with your account first'
+    flash[:error] = "Please Log in with your account first"
     redirect_to user_login_path
   end
 
@@ -66,7 +75,7 @@ class UsersController < ApplicationController
     return if session[:user_id] && session[:user_id] == params[:id].to_i
 
     # else error
-    flash.now[:error] = 'This is not your account!'
+    flash.now[:error] = "This is not your account!"
     render inline: "<h1>You have no access to this account's profile</h1>"
     # redirect_to user_login_path
   end

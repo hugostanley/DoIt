@@ -12,7 +12,6 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
-    p @user
   end
 
   def show
@@ -20,13 +19,18 @@ class TasksController < ApplicationController
   end
 
   def create
+    curr_user = User.find(session[:user_id])
     @task = Task.new(secure_new_task_params)
     @task[:user_id] = session[:user_id]
+    @new_task = {username: curr_user.id, email: curr_user.email, task: @task}
 
-    if @task.save
-      redirect_to user_task_path(id: session[:user_id], task_id: @task[:id])
-    else
-      render :new, status: :unprocessable_entity
+    respond_to do |format|
+      if @task.save
+        format.html { render user_tasks_path }
+        format.turbo_stream
+      else
+        format.html { render :new, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -35,13 +39,13 @@ class TasksController < ApplicationController
     @tasks = Task.where(user_id: @user.id)
     task = Task.find(params[:task_id])
 
-    if task.present?
-      task.update!(date_completed: Time.now, is_completed: true)
-      if request.referrer == user_tasks_url
-        redirect_to user_tasks_path
-      else
-        redirect_to user_task id: session[:user_id], task_id: task.id
-      end
+    return unless task.present?
+
+    task.update!(date_completed: Time.now, is_completed: true)
+    if request.referrer == user_tasks_url
+      redirect_to user_tasks_path
+    else
+      redirect_to user_task id: session[:user_id], task_id: task.id
     end
   end
 
@@ -53,6 +57,10 @@ class TasksController < ApplicationController
 
   def feed
     @tasks = Task.tasks_for_feed(User.find(session[:user_id]))
+  end
+
+  def add(_what_is, _you)
+    "neat"
   end
 
   private
@@ -68,7 +76,7 @@ class TasksController < ApplicationController
     return if is_logged_in && User.find(session[:user_id])
 
     # else go to login page
-    flash[:error] = 'Please Log in with your account first'
+    flash[:error] = "Please Log in with your account first"
     redirect_to user_login_path
   end
 end
