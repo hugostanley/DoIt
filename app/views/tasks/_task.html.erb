@@ -1,0 +1,79 @@
+<div
+  class="flex flex-col w-full gap-2 items-center  justify-between transition-all duration-70 text-black bg-white mb-2 border-primary-gray border shadow-sm p-4">
+
+  <div class="w-full flex items-center gap-1">
+    <%= image_tag 'stanley_avatar.jpeg' , class: 'w-auto flex-none h-12 rounded-full' %>
+      <div class="leading-[0.8]">
+        <p class="font-semibold">
+          <%= task[:username] %>
+        </p>
+        <p class="text-xs text-slate-700">@<%= task[:email] %>
+        </p>
+      </div>
+  </div>
+  <div class="w-full">
+    <p class="text-2xl font-bold">
+      <%= task[:task].title %>
+    </p>
+    <p class="text-xs text-gray-700 italic  after:absolute relative after:content-[" hello"] before:block after:top-0
+      after:left-0 after:bg-red-200 after:w-10 after:h-10">
+      <%= task[:task].description %>
+    </p>
+
+  </div>
+
+  <div class="w-full flex gap-1">
+    <% if task[:task].is_completed? %>
+      <div data-controller="icon">
+        <div
+          class="flex gap-2 h-8 w-8 pl-[0.45rem] whitespace-nowrap overflow-hidden transition-all duration-100 ease-in items-center  rounded-full shadow-sm border border-green-200 bg-green-100 cursor-pointer"
+          data-action="click->icon#greet" data-icon-target="icon">
+          <span class="material-icons text-green-800 md-18">
+            done
+          </span>
+          <span class="text-green-800 text-xs font-semibold">
+            <%= task[:task].date_completed.strftime("%A, %B %d") %>
+          </span>
+        </div>
+      </div>
+      <% else %>
+        <div data-controller="icon">
+          <div
+            class="flex gap-2 h-8 w-8 pl-[0.45rem] whitespace-nowrap overflow-hidden transition-all duration-100 ease-in items-center  rounded-full shadow-sm border border-red-200 bg-red-100 cursor-pointer"
+            data-action="click->icon#greet" data-icon-target="icon">
+            <span class="material-icons text-red-800">
+              close
+            </span>
+            <span class="text-red-800 text-xs font-semibold mr-3">Not yet completed</span>
+          </div>
+        </div>
+        <% end %>
+
+          <% if task[:task].deadline.present? %>
+            <div data-controller="icon">
+              <div
+                class="flex gap-2 h-8 w-8 pl-[0.45rem] whitespace-nowrap overflow-hidden transition-all duration-100 ease-in items-center  rounded-full shadow-sm border border-yellow-200 bg-yellow-100 cursor-pointer"
+                data-action="click->icon#greet" data-icon-target="icon">
+                <span class="material-icons  text-yellow-800 text-2xl !important">
+                  calendar_month
+                </span>
+                <span class="text-yellow-700 text-xs font-semibold">
+                  <%= task[:task].deadline.strftime("%A, %B %d") %>
+                </span>
+              </div>
+            </div>
+            <% else %>
+              <div data-controller="icon">
+                <div
+                  class="flex gap-2 h-8 w-8 pl-[0.45rem] whitespace-nowrap overflow-hidden transition-all duration-100 ease-in items-center  rounded-full shadow-sm border border-yellow-200 bg-yellow-100 cursor-pointer"
+                  data-action="click->icon#greet " data-icon-target="icon">
+                  <span class="material-icons text-yellow-800">
+                    calendar_month
+                  </span>
+                  <span class="text-yellow-700 text-xs font-semibold">No Due Date</span>
+                </div>
+              </div>
+              <% end %>
+
+  </div>
+</div>

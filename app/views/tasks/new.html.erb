@@ -1,33 +1,4 @@
-<h1>Create new Todo</h1>
-<%= form_with model: @task, url: create_task_path do |form| %>
-  <div>
-    <%= form.label :title %> <br>
-    <%= form.text_field :title %> <br>
-    <% @task.errors.full_messages_for(:title).each do |message| %>
-      <div>
-        <%= message %>
-      </div>
-    <% end %>
-  </div>
-  <div>
-    <%= form.label :description %> <br>
-    <%= form.text_area :description %> <br>
-    <% @task.errors.full_messages_for(:description).each do |message| %>
-      <div>
-        <%= message %>
-      </div>
-    <% end %>
-  </div>
-  <div>
-    <%= form.label :deadline %> <br>
-    <%= form.date_field :deadline %> <br>
-    <% @task.errors.full_messages_for(:deadline).each do |message| %>
-      <div>
-        <%= message %>
-      </div>
-    <% end %>
-  </div>
-  <div>
-    <button><%= form.submit %></button>
-  </div>
+<%= turbo_frame_tag "modal" do %>
+  <%= render "tasks/form", task: @task %>
 <% end %>
+

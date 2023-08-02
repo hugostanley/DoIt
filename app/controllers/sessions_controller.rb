@@ -4,7 +4,8 @@
 # Mainly for login
 class SessionsController < ApplicationController
   before_action :check_if_logged_in, only: %i[create new]
-  def new; end
+  def new
+  end
 
   def create
     @user = find_and_authenticate_user(params[:email], params[:password])
@@ -13,7 +14,7 @@ class SessionsController < ApplicationController
       session[:user_id] = @user.id
       redirect_to user_tasks_feed_path
     else
-      flash[:error] = 'Invalid email/password combination'
+      flash[:error] = "Invalid email/password combination"
       redirect_to user_login_path
     end
   end
